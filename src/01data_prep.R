@@ -6,6 +6,7 @@
 #7 treatments plus control
 #6 frogs per treatment
 
+#triple herbicide
 #24 D, ATZ, Metolachlor
 #alone or combined, binary yes or no
 
@@ -18,4 +19,9 @@
 #TotBCF- total bcf
 #AppRate (total)
 
-#frog = green frogs rana clamitans
+#frog = green frogs rana clamitanscat herbs.csv
+
+#next study
+#atrazine, malathion (insect), propiconazole (fungicide)
+
+#possibly just look at atrazine across all pairs...

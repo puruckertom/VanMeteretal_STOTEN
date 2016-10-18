@@ -2,11 +2,10 @@
 #Group,ATZ,D,ME,DT,ATZT,MET,DS,ATZS,MES,DBCF,ATZBCF,METBCF,Weight,SA,TotT,TotBCF,Totalsoil,AppRate
 
 drop: ATZ, ME, D
-atz treatments are ATZT
-MET
-DT
+#atz treatments are ATZT
+#metolachlor treatments are MET
+#2,4-D DT
 Weight,SA,AppRate
-
 
 #spray treatment, liquid
 

@@ -1,3 +1,44 @@
+#as it comes, not properly nesting covariates
+#View(herbs)
+summary(herbs)
+
+atzfrog <- aov(ATZT ~ Group, data=herbs)
+summary (atzfrog)
+
+atzfrog <- aov(ATZT ~ Group + AppRate, data=herbs)
+summary (atzfrog)
+
+
+class(herbs$Group)
+
+#make it tall and skinny
+## Wide to long
+
+l <- reshape(herbs, 
+             varying = c("read", "write", "math", "science", "socst"), 
+             v.names = "score",
+             timevar = "subj", 
+             times = c("read", "write", "math", "science", "socst"), 
+             new.row.names = 1:1000,
+             direction = "long")
+
+
+###############
+#not yet updated below
+ATZFROG <- read.csv("~/Desktop/Summer 2015 Research/ATZFROG.csv")
+View(ATZFROG)
+atzgroups <- aov(ATZT ~ Pestnumber, data=ATZFROG)
+summary(atzgroups)
+logATZT <- log10(ATZT)
+logATZT <- log10(ATZT, data=ATZFROG)
+atzgroups <- aov(log(ATZT) ~ Pestnumber, data=ATZFROG)
+summary(atzgroups)
+logATZT <- log(ATZT, data=ATZFROG)
+atzfrog <- aov(log(ATZT) ~ Rtreatment, data=ATZFROG)
+summary(atzfrog)
+ALLFROG <- read.csv("~/Desktop/Summer 2015 Research/ALLFROG.csv")
+View(ALLFROG)
+
 ## want to implement a factorial anova
 
 #aov

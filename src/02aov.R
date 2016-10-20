@@ -1,3 +1,29 @@
+library(FrF2)
+## create resolution III design
+plan <- FrF2(8,nfactors=3, factor.names=c("atz","met","d"),replications=6)
+## add some resonse data
+y <- c(2+desnum(plan)%*%c(2,3,0) +
+         1.5*apply(desnum(plan)[,c(1,2)],1,"prod") + rnorm(8))
+## the "c()" makes y into a vector rather than a 1-column matrix
+plan <- add.response(plan, y)
+DanielPlot(lm(y~(.)^2,plan), alpha=0.2, half=TRUE)
+## alias information
+design.info(plan)
+## full foldover for dealiasing all main effects
+plan <- fold.design(plan)
+design.info(plan)
+## further data, shifted by -2
+y <- c(y, desnum(plan)[9:16,1:5]%*%c(2,3,0,0,0) +
+         1.5*apply(desnum(plan)[9:16,c(1,2)],1,"prod") + rnorm(8))
+plan <- add.response(plan, y, replace=TRUE)
+linmod <- lm(y~(.)^2,plan)
+DanielPlot(linmod, alpha=0.2, half=TRUE)
+MEPlot(linmod)
+IAPlot(linmod)
+
+
+
+
 #as it comes, not properly nesting covariates
 #View(herbs)
 summary(herbs)

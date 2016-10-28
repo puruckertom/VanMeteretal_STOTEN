@@ -130,3 +130,7 @@ summary(lm.met6)
 lm.met7 <- lm(Conc ~ (ATZ + D)^2, data=herbs.bcf.met)
 summary(lm.met7)
 
+#log kows
+atrazine 2.4-2.7
+2,4-D 2.81
+s-metolachlor 3.24

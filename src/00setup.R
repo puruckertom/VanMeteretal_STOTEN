@@ -24,8 +24,8 @@ rvm_csv_in <- paste(rvm_root, "csv_in/", sep="")
 boo = file.exists(paste(rvm_csv_in,"Herbs.csv",sep=""))
 print(paste("check to see if R can access files OK: ", boo))
 
-#read data
-herbs <- read.csv(paste(rvm_csv_in,"Herbs.csv",sep=""))
+#read data, original version
+#herbs <- read.csv(paste(rvm_csv_in,"Herbs.csv",sep=""))
 #View(herbs)
 
 #cleaned up data set, manually reshaped
@@ -134,3 +134,5 @@ summary(lm.met7)
 #atrazine 2.4-2.7
 #2,4-D 2.81
 #s-metolachlor 3.24
+
+#6 sets of boxplots for all 3 pesticides times 2 treatments

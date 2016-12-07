@@ -7,6 +7,7 @@ library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(knitr, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2)
 library(reshape2)
+library(MASS)
 print("list of loaded packages: ")
 print((.packages()))
 
@@ -15,6 +16,9 @@ print((.packages()))
 #tom epa windows
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   rvm_root<-path.expand("k:/git/vanmeter_herbicides/")
+}
+if(Sys.info()[4]=="stp-air"){
+  rvm_root<-path.expand("~/git/vanmeter_herbicides/")
 }
 print(paste("Root directory location: ", rvm_root, sep=""))
 
@@ -89,7 +93,8 @@ lm.atzt6 <- lm(Conc ~ D + ME, data=herbs.bcf.atzt)
 summary(lm.atzt6)
 lm.atzt7 <- lm(Conc ~ (D + ME)^2, data=herbs.bcf.atzt)
 summary(lm.atzt7)
-
+step.atzt7 <- stepAIC(lm.atzt7, direction="both")
+step.atzt7$anova
 
 #2,4D frog concs - categorical regression with and without interactions
 summary(herbs.dt)
@@ -110,6 +115,8 @@ lm.dt6 <- lm(Conc ~ ATZ + ME, data=herbs.bcf.dt)
 summary(lm.dt6)
 lm.dt7 <- lm(Conc ~ (ATZ + ME)^2, data=herbs.bcf.dt)
 summary(lm.dt7)
+step.dt7 <- stepAIC(lm.dt7, direction="both")
+step.dt7$anova
 
 #metolachlor frog concs - categorical regression with and without interactions
 summary(herbs.met)
@@ -129,6 +136,8 @@ lm.met6 <- lm(Conc ~ ATZ + D, data=herbs.bcf.met)
 summary(lm.met6)
 lm.met7 <- lm(Conc ~ (ATZ + D)^2, data=herbs.bcf.met)
 summary(lm.met7)
+step.met7 <- stepAIC(lm.met7, direction="both")
+step.met7$anova
 
 #log kows
 #atrazine 2.4-2.7

@@ -7,18 +7,19 @@ library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(knitr, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2)
 library(reshape2)
-library(MASS)
 print("list of loaded packages: ")
 print((.packages()))
 
+#google doc for sharing results with Robin
+#https://docs.google.com/document/d/1bone3x8n6oWeySelsXaKIBnfHbaZdKDgipFpHuLje5Y/edit
+
+#explanation of lm output
+#http://blog.yhat.com/posts/r-lm-summary.html
 
 #Determine path directory based on the user machine######
 #tom epa windows
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   rvm_root<-path.expand("k:/git/vanmeter_herbicides/")
-}
-if(Sys.info()[4]=="stp-air"){
-  rvm_root<-path.expand("~/git/vanmeter_herbicides/")
 }
 print(paste("Root directory location: ", rvm_root, sep=""))
 
@@ -34,6 +35,10 @@ print(paste("check to see if R can access files OK: ", boo))
 
 #cleaned up data set, manually reshaped
 herbs2 <- read.csv(paste(rvm_csv_in,"Herbs2.csv",sep=""))
+#View(herbs2)
+
+#cleaned up data set, manually reshaped
+hif2 <- read.csv(paste(rvm_csv_in,"hif2.csv",sep=""))
 #View(herbs2)
 
 #factors as appropriate
@@ -145,3 +150,128 @@ step.met7$anova
 #s-metolachlor 3.24
 
 #6 sets of boxplots for all 3 pesticides times 2 treatments
+
+
+
+
+
+##hif start here
+#factors as appropriate
+summary(hif2)
+class(hif2$Group)
+class(hif2$ATZ)
+hif2$ATZ <- factor(hif2$ATZ)
+class(hif2$ATZ)
+class(hif2$MA)
+hif2$MA <- factor(hif2$MA)
+class(hif2$MA)
+class(hif2$PROP)
+hif2$PROP <- factor(hif2$PROP)
+class(hif2$PROP)
+
+class(hif2$Pesticide)
+levels(hif2$Pesticide)
+atzt <- which(hif2$Pesticide=="ATZT" & hif2$ATZ==1)
+length(atzt)
+mat <- which(hif2$Pesticide=="MAT" & hif2$MA==1)
+length(mat)
+propt <- which(hif2$Pesticide=="PROPT" & hif2$PROP==1)
+length(propt)
+soil.prop <- which(hif2$Pesticide=="PROPS" & hif2$PROP==1)
+length(soil.prop)
+soil.ma <- which(hif2$Pesticide=="MAS" & hif2$MA==1)
+length(soil.ma)
+soil.atz <- which(hif2$Pesticide=="ATZS" & hif2$ATZ==1)
+length(soil.atz)
+bcf.prop <- which(hif2$Pesticide=="PROPBCF" & hif2$PROP==1)
+length(bcf.prop)
+bcf.ma <- which(hif2$Pesticide=="MABCF" & hif2$MA==1)
+length(bcf.ma)
+bcf.atz <- which(hif2$Pesticide=="ATZBCF" & hif2$ATZ==1)
+length(bcf.atz)
+
+hif.atzt <- hif2[atzt,]
+dim(hif.atzt)
+hif.mat <- hif2[mat,]
+dim(hif.mat)
+hif.propt <- hif2[propt,]
+dim(hif.propt)
+hif.soil.prop <- hif2[soil.prop,]
+dim(hif.soil.prop)
+hif.soil.ma <- hif2[soil.ma,]
+dim(hif.soil.ma)
+hif.soil.atz <- hif2[soil.atz,]
+dim(hif.soil.atz)
+hif.bcf.ma <- hif2[bcf.ma,]
+dim(hif.bcf.ma)
+hif.bcf.prop <- hif2[bcf.prop,]
+dim(hif.bcf.prop)
+hif.bcf.atz <- hif2[bcf.atz,]
+dim(hif.bcf.atz)
+
+
+#atrazine frog concs - categorical regression with and without interactions
+summary(hif.atzt)
+#View(hif.atzt)
+hif.atzt$Conc
+lm.atzt <- lm(Conc ~ MA + PROP, data=hif.atzt)
+summary(lm.atzt)
+lm.atzt2 <- lm(Conc ~ (MA + PROP)^2, data=hif.atzt)
+summary(lm.atzt2)
+lm.atzt3 <- lm(Conc ~ MA + PROP + Weight, data=hif.atzt)
+summary(lm.atzt3)
+#atrazine soil concs - categorical regression with and without interactions
+lm.atzt4 <- lm(Conc ~ MA + PROP, data=hif.soil.atz)
+summary(lm.atzt4)
+lm.atzt5 <- lm(Conc ~ (MA + PROP)^2, data=hif.soil.atz)
+summary(lm.atzt5)
+#atrazine bcfs - categorical regression with and without interactions
+lm.atzt6 <- lm(Conc ~ MA + PROP, data=hif.bcf.atz)
+summary(lm.atzt6)
+lm.atzt7 <- lm(Conc ~ (MA + PROP)^2, data=hif.bcf.atz)
+summary(lm.atzt7)
+step.atzt7 <- stepAIC(lm.atzt7, direction="both")
+step.atzt7$anova
+
+#malathion frog concs - categorical regression with and without interactions
+summary(hif.mat)
+#View(hif.dt)
+lm.mat <- lm(Conc ~ ATZ + PROP, data=hif.mat)
+summary(lm.mat)
+lm.mat2 <- lm(Conc ~ (ATZ + PROP)^2, data=hif.mat)
+summary(lm.mat2)
+lm.mat3 <- lm(Conc ~ ATZ + PROP + Weight, data=hif.mat)
+summary(lm.mat3)
+#2,4-D soil concs - categorical regression with and without interactions
+lm.mat4 <- lm(Conc ~ ATZ + PROP, data=hif.soil.ma)
+summary(lm.mat4)
+lm.mat5 <- lm(Conc ~ (ATZ + PROP)^2, data=hif.soil.ma)
+summary(lm.mat5)
+#2,4-D bcfs - categorical regression with and without interactions
+lm.mat6 <- lm(Conc ~ ATZ + PROP, data=hif.bcf.ma)
+summary(lm.mat6)
+lm.mat7 <- lm(Conc ~ (ATZ + PROP)^2, data=hif.bcf.ma)
+summary(lm.mat7)
+step.mat7 <- stepAIC(lm.mat7, direction="both")
+step.mat7$anova
+
+#proptolachlor frog concs - categorical regression with and without interactions
+summary(hif.propt)
+lm.propt <- lm(Conc ~ (ATZ + MA), data=hif.propt)
+summary(lm.propt)
+lm.propt2 <- lm(Conc ~ (ATZ + MA)^2, data=hif.propt)
+summary(lm.propt2)
+lm.propt3 <- lm(Conc ~ (ATZ + MA + Weight), data=hif.propt)
+summary(lm.propt3)
+#proptolachlor soil concs - categorical regression with and without interactions
+lm.propt4 <- lm(Conc ~ ATZ + MA, data=hif.soil.prop)
+summary(lm.propt4)
+lm.propt5 <- lm(Conc ~ (ATZ + MA)^2, data=hif.soil.prop)
+summary(lm.propt5)
+#2,4-D soil concs - categorical regression with and without interactions
+lm.propt6 <- lm(Conc ~ ATZ + MA, data=hif.bcf.prop)
+summary(lm.propt6)
+lm.propt7 <- lm(Conc ~ (ATZ + MA)^2, data=hif.bcf.prop)
+summary(lm.propt7)
+step.propt7 <- stepAIC(lm.propt7, direction="both")
+step.propt7$anova

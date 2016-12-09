@@ -69,14 +69,23 @@ bcf.atzt <- which(herbs2$Pesticide=="ATZBCF" & herbs2$ATZ==1)
 
 
 herbs.atzt <- herbs2[atzt,]
+dim(herbs.atzt)
 herbs.dt <- herbs2[dt,]
+dim(herbs.dt)
 herbs.met <- herbs2[met,]
+dim(herbs.met)
 herbs.soil.met <- herbs2[soil.met,]
+dim(herbs.soil.met)
 herbs.soil.dt <- herbs2[soil.dt,]
+dim(herbs.soil.dt)
 herbs.soil.atzt <- herbs2[soil.atzt,]
+dim(herbs.soil.atzt)
 herbs.bcf.met <- herbs2[bcf.met,]
+dim(herbs.bcf.met)
 herbs.bcf.dt <- herbs2[bcf.dt,]
+dim(herbs.bcf.dt)
 herbs.bcf.atzt <- herbs2[bcf.atzt,]
+dim(herbs.bcf.atzt)
 
 
 #atrazine frog concs - categorical regression with and without interactions
@@ -99,7 +108,9 @@ lm.atzt6 <- lm(Conc ~ D + ME, data=herbs.bcf.atzt)
 summary(lm.atzt6)
 lm.atzt7 <- lm(Conc ~ (D + ME)^2, data=herbs.bcf.atzt)
 summary(lm.atzt7)
-step.atzt7 <- stepAIC(lm.atzt7, direction="both")
+step.atzt7 <- stepAIC(lm.atzt7, direction="both", trace=TRUE)
+summary(step.atzt7)
+step.atzt7
 step.atzt7$anova
 
 #2,4D frog concs - categorical regression with and without interactions
@@ -121,7 +132,7 @@ lm.dt6 <- lm(Conc ~ ATZ + ME, data=herbs.bcf.dt)
 summary(lm.dt6)
 lm.dt7 <- lm(Conc ~ (ATZ + ME)^2, data=herbs.bcf.dt)
 summary(lm.dt7)
-step.dt7 <- stepAIC(lm.dt7, direction="both")
+step.dt7 <- stepAIC(lm.dt7, direction="both", trace=TRUE)
 step.dt7$anova
 
 #metolachlor frog concs - categorical regression with and without interactions
@@ -142,7 +153,7 @@ lm.met6 <- lm(Conc ~ ATZ + D, data=herbs.bcf.met)
 summary(lm.met6)
 lm.met7 <- lm(Conc ~ (ATZ + D)^2, data=herbs.bcf.met)
 summary(lm.met7)
-step.met7 <- stepAIC(lm.met7, direction="both")
+step.met7 <- stepAIC(lm.met7, direction="both", trace=TRUE)
 step.met7$anova
 
 #log kows

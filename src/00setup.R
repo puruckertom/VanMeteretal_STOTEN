@@ -7,6 +7,7 @@ library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(knitr, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2)
 library(reshape2)
+library(MASS)
 print("list of loaded packages: ")
 print((.packages()))
 

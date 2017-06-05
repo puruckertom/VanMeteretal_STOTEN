@@ -301,14 +301,23 @@ step.propt7$anova
 #must be explicitly passed if you want to compute it.
 #k Number of groups
 #n Number of observations (per group)
-#f Effect size (a priori I guess)
+#f = effect size (a priori based on cohens d for instance)
 #the effect size is the difference of the means between the lowest group and the 
-#highest group over the common standard deviation
+#highest group over the common standard deviation (=cohens d)
+#cohen suggest 0.2,0.5,0.8 as small, medium, large
 #sig.level Significance level (Type I error probability)
 #power Power of test (1 minus Type II error probability)
 
 #return the power as a function of f
 pwr.anova.test(k=4,n=6,f=.2,sig.level=0.05)
+pwr.anova.test(k=4,n=6,f=.5,sig.level=0.05)
+pwr.anova.test(k=4,n=6,f=.8,sig.level=0.05)
+#conclusion, we have reasonable probability to detect large effects (0.85)
+#but pretty lame probabilities for small (0.1) and medium (0.44) effects sizes
 
 #lock power and get sample size as a function of f
+pwr.anova.test(k=4,f=.2,sig.level=0.05,power=0.8)
+pwr.anova.test(k=4,f=.5,sig.level=0.05,power=0.8)
 pwr.anova.test(k=4,f=.8,sig.level=0.05,power=0.8)
+#conclusion, would have needed 70, 12, 5 samples to get power of 0.8
+#for the small, medium and large effects sizes

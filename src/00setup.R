@@ -294,7 +294,7 @@ step.propt7$anova
 
 #power analyses
 #probability of detecting a true effect if it exists...
-#based on normality assumptions
+#based on normality assumptions, common variance between groups
 #pwr.anova.test(k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
 #Exactly one of the parameters ’k’,’n’,’h’,’power’ and ’sig.level’ must be passed as NULL, and that
 #parameter is determined from the others. Notice that the last one has non-NULL default so NULL
@@ -307,4 +307,8 @@ step.propt7$anova
 #sig.level Significance level (Type I error probability)
 #power Power of test (1 minus Type II error probability)
 
-pwr.anova.test(k=4,n=6,f=6.98,sig.level=0.05)
+#return the power as a function of f
+pwr.anova.test(k=4,n=6,f=.2,sig.level=0.05)
+
+#lock power and get sample size as a function of f
+pwr.anova.test(k=4,f=.8,sig.level=0.05,power=0.8)

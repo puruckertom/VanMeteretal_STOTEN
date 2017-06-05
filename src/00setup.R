@@ -8,6 +8,7 @@ library(knitr, quietly = TRUE, warn.conflicts = FALSE)
 library(ggplot2)
 library(reshape2)
 library(MASS)
+library(pwr)
 print("list of loaded packages: ")
 print((.packages()))
 
@@ -21,6 +22,9 @@ print((.packages()))
 #tom epa windows
 if(Sys.info()[4]=="DZ2626UTPURUCKE"){
   rvm_root<-path.expand("k:/git/vanmeter_herbicides/")
+}
+if(Sys.info()[4]=="stp-air"){
+  rvm_root<-path.expand("~/git/vanmeter_herbicides/")
 }
 print(paste("Root directory location: ", rvm_root, sep=""))
 
@@ -287,3 +291,20 @@ lm.propt7 <- lm(Conc ~ (ATZ + MA)^2, data=hif.bcf.prop)
 summary(lm.propt7)
 step.propt7 <- stepAIC(lm.propt7, direction="both")
 step.propt7$anova
+
+#power analyses
+#probability of detecting a true effect if it exists...
+#based on normality assumptions
+#pwr.anova.test(k = NULL, n = NULL, f = NULL, sig.level = 0.05, power = NULL)
+#Exactly one of the parameters ’k’,’n’,’h’,’power’ and ’sig.level’ must be passed as NULL, and that
+#parameter is determined from the others. Notice that the last one has non-NULL default so NULL
+#must be explicitly passed if you want to compute it.
+#k Number of groups
+#n Number of observations (per group)
+#f Effect size (a priori I guess)
+#the effect size is the difference of the means between the lowest group and the 
+#highest group over the common standard deviation
+#sig.level Significance level (Type I error probability)
+#power Power of test (1 minus Type II error probability)
+
+pwr.anova.test(k=4,n=6,f=6.98,sig.level=0.05)

@@ -1,3 +1,5 @@
+##LOOK AT LINE 64
+
 #Install and load supporting libraries.
 print(Sys.info()[4])
 
@@ -59,6 +61,7 @@ class(herbs2$ME)
 herbs2$ME <- factor(herbs2$ME)
 class(herbs2$ME)
 
+# there were changes to the datasets that might break some of the below code
 class(herbs2$Pesticide)
 levels(herbs2$Pesticide)
 atzt <- which(herbs2$Pesticide=="ATZT" & herbs2$ATZ==1)
